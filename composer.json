@@ -1,0 +1,16 @@
+{
+    "name": "intracto/datatables-backend",
+    "license": "MIT",
+    "type": "library",
+    "keywords": ["datatables", "symfony", "ajax"],
+    "description": "Library to handle AJAX calls for datatables.net",
+    "homepage": "https://github.com/Intracto/datatables-backend",
+    "autoload": {
+        "psr-4": {
+            "Intracto\\DataTables\\": "src"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
