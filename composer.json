@@ -10,6 +10,9 @@
             "Intracto\\DataTables\\": "src"
         }
     },
+    "require": {
+        "php": ">=5.4"
+    },
     "config": {
         "bin-dir": "bin"
     }
