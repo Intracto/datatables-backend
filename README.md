@@ -49,19 +49,16 @@ Transform data fetched from the `Repository` to format needed for the datatables
 ### Columns
 
 ```
-class NotarisListColumns extends Columns
+class AddressListColumns extends Columns
 {
     public function __construct()
     {
         parent::__construct(
             array(
                 // In order of the tables headers
-                new Column('name', 'name', true, true),
-                new Column('office', 'office', false, false),
-                new Column('email', 'email', false, false),
-                new Column('telephone', 'telephone', false, false),
-                new Column('street', 'address.street', false, false),
-                new Column('city', 'address.city', false, false),
+                new Column('city', 'city', true, true),
+                new Column('zip', 'zip', false, false),
+                new Column('street', 'street', false, false),
                 new Column('actions', 'actions', false, false),
             )
         );
@@ -72,7 +69,7 @@ class NotarisListColumns extends Columns
 ### Transformer
 
 ```
-class NotarisListColumnTransformer implements ColumnTransformerInterface
+class AddressListColumnTransformer implements ColumnTransformerInterface
 {
     /**
      * @var EngineInterface
@@ -80,7 +77,7 @@ class NotarisListColumnTransformer implements ColumnTransformerInterface
     private $renderEngine;
 
     /**
-     * NotarisListColumnTransformer constructor
+     * AddressListColumnTransformer constructor
      *
      * @param EngineInterface $renderEngine
      */
@@ -98,18 +95,15 @@ class NotarisListColumnTransformer implements ColumnTransformerInterface
     {
         $columns = array();
 
-        foreach ($data as $notaris) {
+        foreach ($data as $address) {
             /**
-             * @var Notaris $notaris
+             * @var Address $address
              */
             $columns[] = array(
-                $notaris->getName(),
-                $notaris->getOffice(),
-                $notaris->getEmail(),
-                $notaris->getTelephone(),
-                $notaris->getAddress()->getStreet(),
-                $notaris->getAddress()->getCity(),
-                $this->renderEngine->render('Notaris/_list.actions.html.twig', array('notaris' => $notaris)),
+                $address->getCity()
+                $address->getZip()
+                $address->getStreet()
+                $this->renderEngine->render('Address/_list.actions.html.twig', array('address' => $address)),
             );
         }
 
@@ -121,7 +115,7 @@ class NotarisListColumnTransformer implements ColumnTransformerInterface
 ### Repository
 
 ```
-class NotarisRepository extends DocumentRepository implements DataTablesRepositoryInterface
+class AddressRepository extends DocumentRepository implements DataTablesRepositoryInterface
 {
     use DataTablesRepositoryTrait;
 }
@@ -132,7 +126,7 @@ class NotarisRepository extends DocumentRepository implements DataTablesReposito
 ```
 public function listAction()
 {
-    $columns = new NotarisListColumns();
+    $columns = new AddressListColumns();
 
     return array(
         'columns' => $columns,
@@ -141,12 +135,12 @@ public function listAction()
 
 public function ajaxListAction(Request $request)
 {
-    $parameters = Parameters::fromParameterBag($request->query, new NotarisListColumns());
+    $parameters = Parameters::fromParameterBag($request->query, new AddressListColumns());
 
     $data = $this->dataTablesDataProvider->getData(
         $parameters,
-        $notarisRepository,
-        $notarisListColumnTransformer
+        $addressRepository,
+        $addressListColumnTransformer
     );
 
     return new JsonResponse($data);
