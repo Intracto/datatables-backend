@@ -62,7 +62,9 @@ abstract class Columns implements \ArrayAccess, \Iterator
      */
     public function offsetSet($offset, $value)
     {
-        throw new \InvalidArgumentException('Not implemented');
+        if ($this->offsetExists($offset) === false) {
+            $this->columns[$offset] = $value;
+        }
     }
 
     /**
@@ -70,7 +72,9 @@ abstract class Columns implements \ArrayAccess, \Iterator
      */
     public function offsetUnset($offset)
     {
-        throw new \InvalidArgumentException('Not implemented');
+        if ($this->offsetExists($offset) === false) {
+            unset($this->columns[$offset]);
+        }
     }
 
     /**
