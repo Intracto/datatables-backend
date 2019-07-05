@@ -151,6 +151,10 @@ class Parameters
      */
     public function hasFilters()
     {
+        if (null === $this->filters) {
+            return false;
+        }
+
         return count($this->filters) > 0;
     }
 
