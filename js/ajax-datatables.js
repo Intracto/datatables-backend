@@ -10,23 +10,25 @@
 var oDatatable;
 
 /* ajax datatable */
-function ajaxDatatable(path, sorting, filters){
+function ajaxDatatable(path, sorting, filters, stateSaveAffix){
     var path = path || '';
     var sorting = sorting || [];
     var filters = filters || {};
+    var stateSaveAffix = stateSaveAffix || '';
 
     if (oDatatable === undefined) {
         /* first init */
-        initAjaxDatatable(path, sorting, filters)
+        initAjaxDatatable(path, sorting, filters, stateSaveAffix)
     } else {
         /* reload */
         oDatatable.ajax.reload();
     }
 }
 
-function initAjaxDatatable(path, sorting, filters){
-
+function initAjaxDatatable(path, sorting, filters, stateSaveAffix){
     var $ajaxDatatable = $('.ajaxdatatable');
+
+    stateKey = window.location.pathname + stateSaveAffix;
 
     oDatatable = $ajaxDatatable.DataTable({
         "oLanguage": {
@@ -43,6 +45,7 @@ function initAjaxDatatable(path, sorting, filters){
                 "sLast": "Laatste"
             }
         },
+        "bStateSave": true,
         "processing": true,
         "serverSide": true,
         "orderMulti": false,
@@ -56,7 +59,13 @@ function initAjaxDatatable(path, sorting, filters){
             }
         },
         "columns": sorting,
-        "order": [[ getDefaultSortField($ajaxDatatable), getDefaultSortOrder($ajaxDatatable)]]
+        "order": [[ getDefaultSortField($ajaxDatatable), getDefaultSortOrder($ajaxDatatable)]],
+        "stateSaveCallback": function(settings, data) {
+            localStorage.setItem('DataTables-' + settings.sInstance + stateKey, JSON.stringify(data))
+        },
+        "stateLoadCallback": function(settings) {
+            return JSON.parse( localStorage.getItem('DataTables-' + settings.sInstance + stateKey))
+        }
     });
 }
 
