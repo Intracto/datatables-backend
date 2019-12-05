@@ -213,7 +213,7 @@ The `filters` are optional, here you can pass searchable/filterable fields
         };
 
         {# on page load, init the datatable #}
-        ajaxDatatable(ajaxCallPath, sortable, filters);
+        ajaxDatatable(ajaxCallPath, sortable, filters, stateSaveAffix);
 
         {# on submit, change, whenever you want #}
         $(document).on("click", "#js-filter-submit", function(){
