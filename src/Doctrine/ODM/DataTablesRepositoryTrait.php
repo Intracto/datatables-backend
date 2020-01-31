@@ -14,6 +14,7 @@ namespace Intracto\DataTables\Doctrine\ODM;
 use Doctrine\ODM\MongoDB\Query\Builder;
 use Intracto\DataTables\Columns;
 use Intracto\DataTables\Parameters;
+use MongoDB\BSON\Regex;
 
 trait DataTablesRepositoryTrait
 {
@@ -22,7 +23,7 @@ trait DataTablesRepositoryTrait
      */
     public function getDataTablesTotalRecordsCount(Parameters $parameters, Columns $columns)
     {
-        return $this->createQueryBuilder()->getQuery()->execute()->count();
+        return iterator_count($this->createQueryBuilder()->getQuery()->execute());
     }
 
     /**
@@ -30,7 +31,7 @@ trait DataTablesRepositoryTrait
      */
     public function getDataTablesFilteredRecordsCount(Parameters $parameters, Columns $columns)
     {
-        return $this->getFilteredDataTablesQb($parameters, $columns)->getQuery()->execute()->count();
+        return iterator_count($this->getFilteredDataTablesQb($parameters, $columns)->getQuery()->execute());
     }
 
     /**
@@ -85,7 +86,7 @@ trait DataTablesRepositoryTrait
             if (is_callable($value)) {
                 $value($qb);
             } else {
-                $qb->field($field)->equals(new \MongoRegex(sprintf('/%s/i', $value)));
+                $qb->field($field)->equals(new Regex($value, 'i'));
             }
         }
     }
@@ -108,7 +109,7 @@ trait DataTablesRepositoryTrait
         $expression = $qb->expr();
 
         foreach ($columns->getSearchableFields() as $field) {
-            $searchExpr = $qb->expr()->field($field)->equals(new \MongoRegex(sprintf('/%s/i', $searchString)));
+            $searchExpr = $qb->expr()->field($field)->equals(new Regex($searchString, 'i'));
             $expression->addOr($searchExpr);
         }
 
