@@ -37,23 +37,31 @@ class Column
     private $orderable;
 
     /**
+     * @var array
+     */
+    private $classes;
+
+    /**
      * Column constructor
      *
      * @param string $name
      * @param string $dbField
      * @param bool $searchable
      * @param bool $orderable
+     * @param null|array $classes
      */
     public function __construct(
         $name,
         $dbField,
         $searchable,
-        $orderable
+        $orderable,
+        $classes = []
     ) {
         $this->name = $name;
         $this->dbField = $dbField;
         $this->searchable = $searchable;
         $this->orderable = $orderable;
+        $this->classes = $classes;
     }
 
     /**
@@ -86,5 +94,13 @@ class Column
     public function isOrderable()
     {
         return $this->orderable;
+    }
+
+    /**
+     * @return array
+     */
+    public function getClasses()
+    {
+        return $this->classes;
     }
 }
