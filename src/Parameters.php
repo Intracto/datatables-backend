@@ -80,11 +80,11 @@ class Parameters
         $parameters = new Parameters();
 
         $parameters->draw = $parameterBag->get('draw');
-        $parameters->search = $parameterBag->get('search');
+        $parameters->search = $parameterBag->all('search');
         $parameters->start = $parameterBag->get('start');
         $parameters->length = $parameterBag->get('length');
-        $parameters->order = $parameterBag->get('order');
-        $parameters->filters = $parameterBag->get('filters');
+        $parameters->order = $parameterBag->all('order');
+        $parameters->filters = $parameterBag->all('filters');
         $parameters->columns = $columns;
         $parameters->attributes = $attributes;
 
