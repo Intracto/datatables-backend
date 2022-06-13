@@ -75,7 +75,7 @@ class Parameters
      *
      * @return Parameters
      */
-    public static function fromParameterBag(ParameterBag $parameterBag, Columns $columns, array $attributes = array())
+    public static function fromParameterBag(ParameterBag $parameterBag, Columns $columns, array $attributes = array()): Parameters
     {
         $parameters = new Parameters();
 
@@ -94,15 +94,15 @@ class Parameters
     /**
      * @return int
      */
-    public function getDraw()
+    public function getDraw(): int
     {
-        return $this->draw;
+        return (int) $this->draw;
     }
 
     /**
      * @return int
      */
-    public function getLength()
+    public function getLength(): int
     {
         return (int) $this->length;
     }
@@ -110,7 +110,7 @@ class Parameters
     /**
      * @return int
      */
-    public function getStart()
+    public function getStart(): int
     {
         return (int) $this->start;
     }
@@ -118,7 +118,7 @@ class Parameters
     /**
      * @return string
      */
-    public function getOrderField()
+    public function getOrderField(): ?string
     {
         // Only sorting on one column supported for now
         $columnIndex = $this->order[0]['column'];
@@ -133,7 +133,7 @@ class Parameters
     /**
      * @return string
      */
-    public function getOrderDirection()
+    public function getOrderDirection(): string
     {
         return $this->order[0]['dir']; // Only sorting on one column supported for now
     }
@@ -141,7 +141,7 @@ class Parameters
     /**
      * @return array
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return $this->filters;
     }
@@ -149,7 +149,7 @@ class Parameters
     /**
      * @return bool
      */
-    public function hasFilters()
+    public function hasFilters(): bool
     {
         if (null === $this->filters) {
             return false;
@@ -166,10 +166,10 @@ class Parameters
      *
      * @return void
      */
-    public function addFilter($field, $value = null)
+    public function addFilter($field, $value = null): void
     {
         if (is_callable($field)) {
-            return $this->addCallableFilter($field);
+            $this->addCallableFilter($field);
         }
 
         $this->filters[$field] = $value;
@@ -182,15 +182,15 @@ class Parameters
      *
      * @return void
      */
-    public function addCallableFilter(callable $callback)
+    public function addCallableFilter(callable $callback): void
     {
         $this->filters['callable_' . count($this->filters)] = $callback;
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function hasSearchString()
+    public function hasSearchString(): bool
     {
         return empty($this->search['value']) === false;
     }
@@ -198,7 +198,7 @@ class Parameters
     /**
      * @return string
      */
-    public function getSearchString()
+    public function getSearchString(): string
     {
         return $this->search['value'];
     }
@@ -211,7 +211,7 @@ class Parameters
      *
      * @return mixed
      */
-    public function getAttribute($key, $default = null)
+    public function getAttribute($key, $default = null): mixed
     {
         return array_key_exists($key, $this->attributes) ? $this->attributes[$key] : $default;
     }

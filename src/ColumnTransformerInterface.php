@@ -18,5 +18,5 @@ interface ColumnTransformerInterface
      *
      * @return array
      */
-    public function transform(array $data);
+    public function transform(array $data): array;
 }

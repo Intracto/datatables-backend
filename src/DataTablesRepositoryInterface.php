@@ -24,7 +24,7 @@ interface DataTablesRepositoryInterface
      *
      * @return int
      */
-    public function getDataTablesTotalRecordsCount(Parameters $parameters, Columns $columns);
+    public function getDataTablesTotalRecordsCount(Parameters $parameters, Columns $columns): int;
 
     /**
      * @param Parameters $parameters
@@ -32,7 +32,7 @@ interface DataTablesRepositoryInterface
      *
      * @return int
      */
-    public function getDataTablesFilteredRecordsCount(Parameters $parameters, Columns $columns);
+    public function getDataTablesFilteredRecordsCount(Parameters $parameters, Columns $columns): int;
 
     /**
      * @param Parameters $parameters
@@ -40,5 +40,5 @@ interface DataTablesRepositoryInterface
      *
      * @return array
      */
-    public function getDataTablesData(Parameters $parameters, Columns $columns);
+    public function getDataTablesData(Parameters $parameters, Columns $columns): array;
 }

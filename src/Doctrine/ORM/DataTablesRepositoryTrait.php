@@ -23,7 +23,7 @@ trait DataTablesRepositoryTrait
     /**
      * {@inheritdoc}
      */
-    public function getDataTablesTotalRecordsCount(Parameters $parameters, Columns $columns)
+    public function getDataTablesTotalRecordsCount(Parameters $parameters, Columns $columns): int
     {
         return $this->createQueryBuilder(self::ENTITY_ALIAS)
             ->select('count(' . self::ENTITY_ALIAS . ')')
@@ -34,7 +34,7 @@ trait DataTablesRepositoryTrait
     /**
      * {@inheritdoc}
      */
-    public function getDataTablesFilteredRecordsCount(Parameters $parameters, Columns $columns)
+    public function getDataTablesFilteredRecordsCount(Parameters $parameters, Columns $columns): int
     {
         $qb = $this->getFilteredDataTablesQb($parameters, $columns);
 
@@ -46,7 +46,7 @@ trait DataTablesRepositoryTrait
     /**
      * {@inheritdoc}
      */
-    public function getDataTablesData(Parameters $parameters, Columns $columns)
+    public function getDataTablesData(Parameters $parameters, Columns $columns): array
     {
         $qb = $this->getFilteredDataTablesQb($parameters, $columns);
         $qb->setFirstResult($parameters->getStart())

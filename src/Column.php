@@ -44,18 +44,18 @@ class Column
     /**
      * Column constructor
      *
-     * @param string $name
-     * @param string $dbField
+     * @param string|null $name
+     * @param string|null $dbField
      * @param bool $searchable
      * @param bool $orderable
-     * @param null|array $classes
+     * @param array|null $classes
      */
     public function __construct(
-        $name,
-        $dbField,
-        $searchable,
-        $orderable,
-        $classes = []
+        ?string $name,
+        ?string $dbField,
+        bool $searchable,
+        bool $orderable,
+        ?array $classes = []
     ) {
         $this->name = $name;
         $this->dbField = $dbField;
@@ -67,7 +67,7 @@ class Column
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -75,7 +75,7 @@ class Column
     /**
      * @return string
      */
-    public function getDbField()
+    public function getDbField(): string
     {
         return $this->dbField;
     }
@@ -83,7 +83,7 @@ class Column
     /**
      * @return bool
      */
-    public function isSearchable()
+    public function isSearchable(): bool
     {
         return $this->searchable;
     }
@@ -91,15 +91,15 @@ class Column
     /**
      * @return bool
      */
-    public function isOrderable()
+    public function isOrderable(): bool
     {
         return $this->orderable;
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getClasses()
+    public function getClasses(): ?array
     {
         return $this->classes;
     }

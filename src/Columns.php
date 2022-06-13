@@ -40,7 +40,7 @@ abstract class Columns implements \ArrayAccess, \Iterator
     /**
      * {@inheritdoc}
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return array_key_exists($offset, $this->columns);
     }
@@ -48,7 +48,7 @@ abstract class Columns implements \ArrayAccess, \Iterator
     /**
      * {@inheritdoc}
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         if ($this->offsetExists($offset) === false) {
             throw new \InvalidArgumentException(sprintf('%s column not available', $offset));
@@ -60,7 +60,7 @@ abstract class Columns implements \ArrayAccess, \Iterator
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if ($this->offsetExists($offset) === false) {
             $this->columns[$offset] = $value;
@@ -70,7 +70,7 @@ abstract class Columns implements \ArrayAccess, \Iterator
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         if ($this->offsetExists($offset) === false) {
             unset($this->columns[$offset]);
@@ -80,7 +80,7 @@ abstract class Columns implements \ArrayAccess, \Iterator
     /**
      * {@inheritdoc}
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }
@@ -88,7 +88,7 @@ abstract class Columns implements \ArrayAccess, \Iterator
     /**
      * {@inheritdoc}
      */
-    public function current()
+    public function current(): mixed
     {
         return $this->columns[$this->position];
     }
@@ -96,7 +96,7 @@ abstract class Columns implements \ArrayAccess, \Iterator
     /**
      * {@inheritdoc}
      */
-    public function key()
+    public function key(): mixed
     {
         return $this->position;
     }
@@ -104,7 +104,7 @@ abstract class Columns implements \ArrayAccess, \Iterator
     /**
      * {@inheritdoc}
      */
-    public function next()
+    public function next(): void
     {
         ++$this->position;
     }
@@ -112,7 +112,7 @@ abstract class Columns implements \ArrayAccess, \Iterator
     /**
      * {@inheritdoc}
      */
-    public function valid()
+    public function valid(): bool
     {
         return array_key_exists($this->position, $this->columns);
     }
@@ -120,7 +120,7 @@ abstract class Columns implements \ArrayAccess, \Iterator
     /**
      * @return array
      */
-    public function getSearchableFields()
+    public function getSearchableFields(): array
     {
         $searchable = array();
 

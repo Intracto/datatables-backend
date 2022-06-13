@@ -29,15 +29,13 @@ class DataProvider
         Columns $columns,
         DataTablesRepositoryInterface $dataTablesRepository,
         ColumnTransformerInterface $columnTransformer
-    ) {
-        $data = array(
+    ): array {
+        return array(
             'draw' => $parameters->getDraw(),
             'recordsTotal' => $dataTablesRepository->getDataTablesTotalRecordsCount($parameters, $columns),
             'recordsFiltered' => $dataTablesRepository->getDataTablesFilteredRecordsCount($parameters, $columns),
             'data' => $this->getColumns($parameters, $columns, $dataTablesRepository, $columnTransformer),
         );
-
-        return $data;
     }
 
     /**
@@ -53,10 +51,9 @@ class DataProvider
         Columns $columns,
         DataTablesRepositoryInterface $dataTablesRepository,
         ColumnTransformerInterface $columnTransformer
-    ) {
+    ): array {
         $data = $dataTablesRepository->getDataTablesData($parameters, $columns);
-        $columnsData = $columnTransformer->transform($data);
 
-        return $columnsData;
+        return $columnTransformer->transform($data);
     }
 }
