@@ -104,7 +104,7 @@ trait DataTablesRepositoryTrait
             return;
         }
 
-        $searchString = $parameters->getSearchString();
+        $searchString = preg_quote($parameters->getSearchString());
 
         $expression = $qb->expr();
 
