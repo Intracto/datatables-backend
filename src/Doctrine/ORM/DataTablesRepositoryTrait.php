@@ -138,6 +138,10 @@ trait DataTablesRepositoryTrait
             return;
         }
 
+        if (0 === count($columns->getSearchableFields())) {
+            return;
+        }
+        
         $searchString = $parameters->getSearchString();
 
         $expression = $qb->expr();

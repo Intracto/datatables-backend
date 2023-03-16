@@ -104,6 +104,10 @@ trait DataTablesRepositoryTrait
             return;
         }
 
+        if (0 === count($columns->getSearchableFields())) {
+            return;
+        }
+        
         $searchString = preg_quote($parameters->getSearchString());
 
         $expression = $qb->expr();
